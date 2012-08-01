@@ -127,10 +127,11 @@ class PDF::SimpleTable
 
     # Whether to display the lines on the table or not. Valid values are:
     #
-    # <tt>:none</tt>::    Displays no lines.
-    # <tt>:outer</tt>::   Displays outer lines only. *Default*
-    # <tt>:inner</tt>::   Displays inner lines only.
-    # <tt>:all</tt>::     Displays all lines, inner and outer.
+    # <tt>:none</tt>::               Displays no lines.
+    # <tt>:outer</tt>::              Displays outer lines only. *Default*
+    # <tt>:inner</tt>::              Displays inner lines only.
+    # <tt>:inner_horizontal</tt>::   Displays inner lines only.
+    # <tt>:all</tt>::                Displays all lines, inner and outer.
   attr_accessor :show_lines
     # Displays the headings for the table if +true+. The default is +true+.
   attr_accessor :show_headings
@@ -675,7 +676,7 @@ class PDF::SimpleTable
               pdf.reopen_object(tOID)
             end
 
-            if :inner == @show_lines or :all == @show_lines
+            if :inner == @show_lines or :all == @show_lines or :inner_horizontal == @show_lines
               # draw a line on the top of the block
               pdf.save_state
               pdf.stroke_color! @line_color
@@ -916,7 +917,8 @@ class PDF::SimpleTable
         pdf.stroke_style inner
       end
 
-      pdf.line(x - gap / 2.0, y0, x - gap / 2.0, y2).stroke
+      pdf.line(x - gap / 2.0, y0, x - gap / 2.0, y2).stroke if :inner_horizontal != @show_lines or cnt == 1 or cnt == n
+
       x1 = x if x > x1
       x0 = x if x < x0
     end
