@@ -917,7 +917,7 @@ class PDF::SimpleTable
         pdf.stroke_style inner
       end
 
-      pdf.line(x - gap / 2.0, y0, x - gap / 2.0, y2).stroke if :inner_horizontal != @show_lines or cnt == 1 or cnt == n
+      pdf.line(x - gap / 2.0, y0, x - gap / 2.0, y2).stroke if :inner == @show_lines or cnt == 1 or cnt == n
 
       x1 = x if x > x1
       x0 = x if x < x0
